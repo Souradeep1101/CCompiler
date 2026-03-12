@@ -41,6 +41,50 @@ namespace CCompiler
 	
 	void Lexer::skipWhitespace()
 	{
+		while (true) 
+		{
+			char c = peek();
+			bool whitespace = c == ' ' || c == '\r' || c == '\t' || c == '\n';
+			
+			if (whitespace)
+			{
+				advance();
+				continue;
+			}
+
+			if (c == '/')
+			{
+				char next_c = peekNext();
+				
+				if (next_c == '/')
+				{
+					while (c != '\n' && !isAtEnd())
+					{
+						advance();
+					}
+					continue;
+				}
+
+				if (next_c == '*')
+				{
+					advance();
+					advance(); 
+
+					while (!(c == '*' && next_c == '/') && !isAtEnd())
+					{
+						advance();
+					}
+
+					if (!isAtEnd())
+					{
+						advance(); 
+						advance();
+					}
+					continue;
+				}
+			}
+			break;
+		}
 	}
 	
 	Token Lexer::lexIdentifierOrKeyword()

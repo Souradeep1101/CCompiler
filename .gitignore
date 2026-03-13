@@ -361,3 +361,31 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# ==========================================
+# CCompiler Specific Additions
+# ==========================================
+
+# CMake and build artifacts
+/build/
+/out/
+/bin/
+
+# Generated Assembly files
+*.s
+*.asm
+
+# Compiler Output Binaries
+*.exe
+/binary_out
+/program
+
+# Torture Test Logs and Large Data
+# (Ensures 9MB sqlite source and 1.5M line logs aren't tracked)
+/tests/sqlite3.c
+/tests/lexer_log.txt
+/lexer_log.txt
+
+# MacOS/Linux specific
+.DS_Store
+*.out

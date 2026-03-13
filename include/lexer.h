@@ -4,6 +4,16 @@
 #include <optional>
 #include <vector>
 
+/**
+ * @file lexer.h
+ * @brief Strictly compliant ISO C11 Lexical Analyzer module.
+ * * Implements the tokenization rules defined in ISO/IEC 9899:2011 (N1570 Draft, Section 6.4).
+ * Supports Universal Character Names (UCNs), strict hex/octal floating-point resolution,
+ * and all standard C11 punctuators and operators.
+ * * - ISO N1570 Draft (Sec 6.4): https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf
+ * - Token & Regex Reference: https://en.cppreference.com/w/c/language/lex
+ */
+
 namespace CCompiler
 {
 	enum class TokenType
@@ -149,6 +159,11 @@ namespace CCompiler
         size_t line = 1;
         size_t column = 1;
 
+        // --- Start Anchors ---
+        size_t start_cursor = 0;
+        size_t start_line = 1;
+        size_t start_column = 1;
+
         // --- State Machine Primitives ---
         bool isAtEnd() const;
         char peek() const;                      // Look at current char without consuming
@@ -160,6 +175,12 @@ namespace CCompiler
         Token lexIdentifierOrKeyword();
         Token lexNumber();
         Token lexString();
+        Token lexCharacter();
+        Token lexOperatorOrPunctuator();
+
+        // Helper Functions
+        bool match(char expected);
+        void handleEscapeSequence(std::string& lexeme);
 
         // Factory function for cleaner code
         Token createToken(TokenType type, std::optional<std::string> value = std::nullopt);

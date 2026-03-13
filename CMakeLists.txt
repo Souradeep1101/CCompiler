@@ -18,3 +18,6 @@ set(SOURCES
 
 # Create the executable
 add_executable(ccompiler ${SOURCES})
+
+# Copy the tests directory to the build output directory
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/tests DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
